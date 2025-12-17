@@ -38,25 +38,26 @@ public class LoginController {
 
     @FXML
     public void onBtnLogin(ActionEvent actionEvent) {
-        try {
-            String correo = this.txtCorreo.getText();
-            String pass = this.txtPass.getText();
-            if (correo.isEmpty() || pass.isEmpty()) {
-                AlertUtils.Alerts("ERROR", "Error", "", "Hay campos vacíos").showAndWait();
-            } else {
-                String sha256hex1 = DigestUtils.sha256Hex(pass);
-
-                boolean loginCorrecto = empleadoDAO.comprobarCredenciales(correo, sha256hex1);
-
-                if (loginCorrecto) {
-                    cambiarVentana(correo);
-                } else {
-                    AlertUtils.Alerts("ERROR", "Usuario no encontrado", "", "No existe ningún paciente con los datos introducidos").showAndWait();
-                }
-            }
-        } catch (Exception e) {
-            AlertUtils.Alerts("ERROR", "Error", "", "Se ha producido un error").showAndWait();
-        }
+        cambiarVentana("hola");
+//        try {
+//            String correo = this.txtCorreo.getText();
+//            String pass = this.txtPass.getText();
+//            if (correo.isEmpty() || pass.isEmpty()) {
+//                AlertUtils.Alerts("ERROR", "Error", "", "Hay campos vacíos").showAndWait();
+//            } else {
+//                String sha256hex1 = DigestUtils.sha256Hex(pass);
+//
+//                boolean loginCorrecto = empleadoDAO.comprobarCredenciales(correo, sha256hex1);
+//
+//                if (loginCorrecto) {
+//                    cambiarVentana(correo);
+//                } else {
+//                    AlertUtils.Alerts("ERROR", "Usuario no encontrado", "", "No existe ningún paciente con los datos introducidos").showAndWait();
+//                }
+//            }
+//        } catch (Exception e) {
+//            AlertUtils.Alerts("ERROR", "Error", "", "Se ha producido un error").showAndWait();
+//        }
     }
 
     private void cambiarVentana(String correo) {
