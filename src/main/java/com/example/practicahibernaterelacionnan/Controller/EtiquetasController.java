@@ -11,38 +11,31 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class JuegosController implements Initializable {
+public class EtiquetasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Main.ventanaJuegos = false;
-        if (Main.ventanaTransacciones) {
+        if (Main.ventanaJuegos) {
             Main.ventanaMenu = false;
         }
     }
 
     @FXML
-    private Button btnAnadir;
+    private Button btnAceptar;
 
     @FXML
     private Button btnBorrar;
 
     @FXML
-    private Button btnCrear;
+    private Button btnCancelar;
 
     @FXML
-    private Button btnGestionar;
+    private Button btnCrear;
 
     @FXML
     private Button btnModificar;
 
     @FXML
-    private Button btnQuitar;
-
-    @FXML
     private Button btnVolver;
-
-    @FXML
-    private ComboBox<?> cbPegi;
 
     @FXML
     private TableColumn<?, ?> colId;
@@ -60,22 +53,16 @@ public class JuegosController implements Initializable {
     private ListView<?> lvEtiquetas;
 
     @FXML
-    private ListView<?> lvEtiquetasDelJuego;
-
-    @FXML
     private TableView<?> tblJuegos;
 
     @FXML
     private TextField txtId;
 
     @FXML
-    private TextField txtPrecio;
+    private TextField txtNombre;
 
     @FXML
-    private TextField txtTitulo;
-
-    @FXML
-    void onBtnAnadir(ActionEvent event) {
+    void onBtnAceptar(ActionEvent event) {
 
     }
 
@@ -85,14 +72,13 @@ public class JuegosController implements Initializable {
     }
 
     @FXML
-    void onBtnCrear(ActionEvent event) {
+    void onBtnCancelar(ActionEvent event) {
 
     }
 
     @FXML
-    void onBtnGestionar(ActionEvent event) throws IOException {
-        Main.ventanaJuegos = true;
-        SceneManager.showVentana(event, "etiquetas", 700, 475);
+    void onBtnCrear(ActionEvent event) {
+
     }
 
     @FXML
@@ -101,17 +87,12 @@ public class JuegosController implements Initializable {
     }
 
     @FXML
-    void onBtnQuitar(ActionEvent event) {
-
-    }
-
-    @FXML
     void onBtnVolver(ActionEvent event) throws IOException {
         if (Main.ventanaMenu) {
             SceneManager.showVentana(event, "menu", 300, 325);
-        } else if (Main.ventanaTransacciones) {
+        } else if (Main.ventanaJuegos) {
             Main.ventanaMenu = true;
-            SceneManager.showVentana(event, "transacciones", 1000, 575);
+            SceneManager.showVentana(event, "juegos", 700, 475);
         }
     }
 }

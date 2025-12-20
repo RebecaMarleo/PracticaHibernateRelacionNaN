@@ -19,4 +19,9 @@ public class Main extends Application {
     }
 
     public static String correo;
+//    public static String ventanaAnterior;
+    public static boolean ventanaJuegos;
+    public static boolean ventanaTransacciones;
+    public static boolean ventanaMenu;
+    public static Stage stage;
 }

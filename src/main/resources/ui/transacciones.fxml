@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practicahibernaterelacionnan.Controller.TransaccionesController">
+<AnchorPane prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practicahibernaterelacionnan.Controller.TransaccionesController">
     <children>
-        <Pane prefHeight="600.0" prefWidth="1000.0">
+        <Pane prefHeight="575.0" prefWidth="1000.0">
             <children>
                 <Label layoutX="47.0" layoutY="45.0" text="ID" />
                 <TextField fx:id="txtId" layoutX="115.0" layoutY="41.0" prefHeight="25.0" prefWidth="399.0" />
@@ -69,6 +69,11 @@
                 <Button fx:id="btnBorrar" layoutX="194.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
             <Button fx:id="btnAceptar" layoutX="364.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnAceptar" text="Aceptar" />
             <Button fx:id="btnCancelar" layoutX="429.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnCancelar" text="Cancelar" />
+            <Button fx:id="btnVolver" layoutY="-1.0" mnemonicParsing="false" onAction="#onBtnVolver" text="&lt;  VOLVER A LA PÁGINA ANTERIOR">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
             </children>
         </Pane>
     </children>

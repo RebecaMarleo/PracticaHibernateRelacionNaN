@@ -6,18 +6,24 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="172.0" prefWidth="226.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practicahibernaterelacionnan.Controller.MenuController">
    <children>
-      <Pane prefHeight="200.0" prefWidth="300.0">
+      <Pane prefHeight="325.0" prefWidth="300.0">
          <children>
             <Label layoutX="70.0" layoutY="24.0" text="Menú principal">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnJuegos" layoutX="96.0" layoutY="88.0" mnemonicParsing="false" onAction="#onBtnJuegos" text="Gestionar juegos" />
-            <Button fx:id="btnTransacciones" layoutX="79.0" layoutY="130.0" mnemonicParsing="false" onAction="#onBtnTransacciones" text="Gestionar transacciones" />
+            <Button fx:id="btnJuegos" layoutX="49.0" layoutY="88.0" mnemonicParsing="false" onAction="#onBtnJuegos" prefWidth="200.0" text="Gestionar juegos" />
+            <Button fx:id="btnTransacciones" layoutX="49.0" layoutY="125.0" mnemonicParsing="false" onAction="#onBtnTransacciones" prefWidth="200.0" text="Gestionar transacciones" />
+            <Button fx:id="btnLogout" layoutX="88.0" layoutY="260.0" mnemonicParsing="false" onAction="#onBtnLogout" text="CERRAR SESIÓN">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnClientes" layoutX="49.0" layoutY="164.0" mnemonicParsing="false" onAction="#onBtnClientes" prefHeight="25.0" prefWidth="200.0" text="Gestionar clientes" />
+            <Button fx:id="btnEtiquetas" layoutX="50.0" layoutY="203.0" mnemonicParsing="false" onAction="#onBtnEtiquetas" prefHeight="25.0" prefWidth="200.0" text="Gestionar etiquetas" />
          </children>
       </Pane>
    </children>

@@ -11,17 +11,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class JuegosController implements Initializable {
+public class ClientesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Main.ventanaJuegos = false;
         if (Main.ventanaTransacciones) {
             Main.ventanaMenu = false;
         }
     }
-
-    @FXML
-    private Button btnAnadir;
 
     @FXML
     private Button btnBorrar;
@@ -30,40 +26,46 @@ public class JuegosController implements Initializable {
     private Button btnCrear;
 
     @FXML
-    private Button btnGestionar;
-
-    @FXML
     private Button btnModificar;
-
-    @FXML
-    private Button btnQuitar;
 
     @FXML
     private Button btnVolver;
 
     @FXML
-    private ComboBox<?> cbPegi;
+    private TableColumn<?, ?> colCliCorreo;
 
     @FXML
-    private TableColumn<?, ?> colId;
+    private TableColumn<?, ?> colCliId;
 
     @FXML
-    private TableColumn<?, ?> colPegi;
+    private TableColumn<?, ?> colCliNombre;
 
     @FXML
-    private TableColumn<?, ?> colPrecio;
+    private TableColumn<?, ?> colJueId;
 
     @FXML
-    private TableColumn<?, ?> colTitulo;
+    private TableColumn<?, ?> colJuePegi;
 
     @FXML
-    private ListView<?> lvEtiquetas;
+    private TableColumn<?, ?> colJuePrecio;
 
     @FXML
-    private ListView<?> lvEtiquetasDelJuego;
+    private TableColumn<?, ?> colJueTitulo;
+
+    @FXML
+    private ListView<?> lvTransacciones;
+
+    @FXML
+    private TableView<?> tblClientes;
 
     @FXML
     private TableView<?> tblJuegos;
+
+    @FXML
+    private TextField txtCorreo;
+
+    @FXML
+    private TextField txtEmpleado;
 
     @FXML
     private TextField txtId;
@@ -72,12 +74,7 @@ public class JuegosController implements Initializable {
     private TextField txtPrecio;
 
     @FXML
-    private TextField txtTitulo;
-
-    @FXML
-    void onBtnAnadir(ActionEvent event) {
-
-    }
+    private TextField txtTotal;
 
     @FXML
     void onBtnBorrar(ActionEvent event) {
@@ -90,18 +87,7 @@ public class JuegosController implements Initializable {
     }
 
     @FXML
-    void onBtnGestionar(ActionEvent event) throws IOException {
-        Main.ventanaJuegos = true;
-        SceneManager.showVentana(event, "etiquetas", 700, 475);
-    }
-
-    @FXML
     void onBtnModificar(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onBtnQuitar(ActionEvent event) {
 
     }
 
