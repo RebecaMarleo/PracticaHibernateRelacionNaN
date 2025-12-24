@@ -18,11 +18,11 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></Label>
-                <TextField fx:id="txtId" layoutX="325.0" layoutY="41.0" prefHeight="25.0" prefWidth="332.0" />
+                <TextField fx:id="txtId" editable="false" layoutX="325.0" layoutY="41.0" prefHeight="25.0" prefWidth="332.0" />
                 <Label layoutX="276.0" layoutY="73.0" text="Nombre" />
                 <TextField fx:id="txtNombre" layoutX="325.0" layoutY="69.0" prefHeight="25.0" prefWidth="332.0" />
                 <Label layoutX="276.0" layoutY="47.0" text="ID" />
-                <ListView fx:id="lvEtiquetas" layoutX="47.0" layoutY="68.0" prefHeight="343.0" prefWidth="200.0" />
+                <ListView fx:id="lvEtiquetas" layoutX="47.0" layoutY="68.0" onMouseClicked="#onFilaSeleccionada" prefHeight="343.0" prefWidth="200.0" />
                 <Label layoutX="276.0" layoutY="109.0" text="Juegos en la categoría:" />
                 <TableView fx:id="tblJuegos" layoutX="276.0" layoutY="127.0" prefHeight="284.0" prefWidth="381.0">
                     <columns>
@@ -33,8 +33,8 @@
                     </columns>
                 </TableView>
                 <Button fx:id="btnCrear" layoutX="57.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
-                <Button fx:id="btnModificar" layoutX="111.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
-                <Button fx:id="btnBorrar" layoutX="189.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
+                <Button fx:id="btnModificar" disable="true" layoutX="111.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
+                <Button fx:id="btnBorrar" disable="true" layoutX="189.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
                 <Button fx:id="btnAceptar" layoutX="280.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnAceptar" text="Aceptar" />
                 <Button fx:id="btnCancelar" layoutX="343.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCancelar" text="Cancelar" />
                 <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#onBtnVolver" text="&lt;  VOLVER A LA PÁGINA ANTERIOR">

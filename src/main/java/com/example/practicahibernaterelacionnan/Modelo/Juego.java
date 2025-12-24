@@ -1,6 +1,10 @@
 package com.example.practicahibernaterelacionnan.Modelo;
 
+import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +20,11 @@ public class Juego {
     @Column(name="titulo")
     private String titulo;
 
-    @Column(name="precio")
-    private double precio;
+    @Column(name="precioVenta")
+    private double precioVenta;
+
+    @Column(name="precioCompra")
+    private double precioCompra;
 
     @Column(name="pegi")
     private String pegi;
@@ -37,16 +44,18 @@ public class Juego {
     public Juego() {
     }
 
-    public Juego(String titulo, double precio, String pegi) {
+    public Juego(String titulo, double precioVenta, double precioCompra, String pegi) {
         this.titulo = titulo;
-        this.precio = precio;
+        this.precioVenta = precioVenta;
+        this.precioCompra = precioCompra;
         this.pegi = pegi;
     }
 
-    public Juego(int id, String titulo, double precio, String pegi) {
+    public Juego(int id, String titulo, double precioVenta, double precioCOmpra, String pegi) {
         this.id = id;
         this.titulo = titulo;
-        this.precio = precio;
+        this.precioVenta = precioVenta;
+        this.precioCompra = precioCompra;
         this.pegi = pegi;
     }
 
@@ -66,12 +75,20 @@ public class Juego {
         this.titulo = titulo;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrecioVenta() {
+        return precioVenta;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPrecioVenta(double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public double getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(double precioCompra) {
+        this.precioCompra = precioCompra;
     }
 
     public String getPegi() {
@@ -92,5 +109,32 @@ public class Juego {
 
     public void addJuegoTransaccion(Juego_Transaccion juego_transaccion) {
         this.juego_transacciones.add(juego_transaccion);
+    }
+
+    public ObservableValue<Number> idProperty() {
+        IntegerProperty propId = new SimpleIntegerProperty(id);
+        return propId;
+    }
+
+    public ObservableValue<String> tituloProperty() {
+        StringProperty propTitulo = new SimpleStringProperty(titulo);
+        return propTitulo;
+    }
+
+    public ObservableValue<Double> precioVentaProperty() {
+        DoubleProperty propPrecioVenta = new SimpleDoubleProperty(precioVenta);
+        return propPrecioVenta.asObject();
+    }
+
+    public ObservableValue<String> pegiProperty() {
+        StringProperty propPegi = new SimpleStringProperty(pegi);
+        return propPegi;
+    }
+
+    public void addEtiqueta(Etiqueta etiqueta) {
+        if (etiquetas == null) {
+            etiquetas = new ArrayList<>();
+        }
+        etiquetas.add(etiqueta);
     }
 }

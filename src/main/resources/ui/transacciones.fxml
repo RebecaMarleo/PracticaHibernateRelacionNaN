@@ -34,8 +34,10 @@
                 </TableView>
             <Label layoutX="746.0" layoutY="193.0" text="TOTAL:" />
             <TextField fx:id="txtTotal" layoutX="801.0" layoutY="189.0" />
-                <Button fx:id="btnQuitar" layoutX="697.0" layoutY="225.0" mnemonicParsing="false" onAction="#onBtnQuitar" text="Quitar" />
-                <Button fx:id="btnAnadir" layoutX="783.0" layoutY="225.0" mnemonicParsing="false" onAction="#onBtnAnadir" text="Añadir" />
+            <Label layoutX="569.0" layoutY="229.0" text="Cantidad" />
+            <TextField fx:id="txtCantidad" layoutX="626.0" layoutY="225.0" />
+                <Button fx:id="btnQuitar" layoutX="792.0" layoutY="225.0" mnemonicParsing="false" onAction="#onBtnQuitar" text="Quitar" />
+                <Button fx:id="btnAnadir" layoutX="850.0" layoutY="225.0" mnemonicParsing="false" onAction="#onBtnAnadir" text="Añadir" />
                 <Label layoutX="569.0" layoutY="269.0" text="CATÁLOGO DE JUEGOS">
                     <font>
                         <Font name="System Bold" size="14.0" />

@@ -102,6 +102,9 @@ public class TransaccionesController implements Initializable {
     private TableView<?> tblTransacciones;
 
     @FXML
+    private TextField txtCantidad;
+
+    @FXML
     private TextField txtEmpleado;
 
     @FXML
