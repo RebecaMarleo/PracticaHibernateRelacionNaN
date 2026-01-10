@@ -55,8 +55,15 @@ public class Etiqueta {
 
     public void addJuego(Juego juego) {
         if (juegos == null) {
-            juegos = new ArrayList<>();
+            juegos = new ArrayList<Juego>();
         }
         juegos.add(juego);
+    }
+
+    public void removeJuego(Juego juego) {
+        if (juegos == null) {
+            juegos = new ArrayList<Juego>();
+        }
+        juegos.remove(juego);
     }
 }

@@ -133,8 +133,15 @@ public class Juego {
 
     public void addEtiqueta(Etiqueta etiqueta) {
         if (etiquetas == null) {
-            etiquetas = new ArrayList<>();
+            etiquetas = new ArrayList<Etiqueta>();
         }
         etiquetas.add(etiqueta);
+    }
+
+    public void removeEtiqueta(Etiqueta etiqueta) {
+        if (etiquetas == null) {
+            etiquetas = new ArrayList<Etiqueta>();
+        }
+        etiquetas.remove(etiqueta);
     }
 }

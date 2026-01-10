@@ -1,6 +1,7 @@
 package com.example.practicahibernaterelacionnan.DAO;
 
 import com.example.practicahibernaterelacionnan.Modelo.Etiqueta;
+import com.example.practicahibernaterelacionnan.Modelo.Juego;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -37,6 +38,30 @@ public class EtiquetaDAO implements EtiquetaDAOInterface {
         ArrayList<Etiqueta> etiquetas = new ArrayList<>(listaEtiquetas);
 
         return etiquetas;
+    }
+
+    @Override
+    public ArrayList<Etiqueta> obtenerEtiquetasPorJuego(Session session, int idJuego) {
+        String query = "SELECT DISTINCT e FROM Etiqueta e JOIN FETCH e.juegos j WHERE j.id = :idJuego";
+        List<Etiqueta> listaEtiquetas = session.createQuery(query, Etiqueta.class)
+                .setParameter("idJuego", idJuego)
+                .getResultList();
+        ArrayList<Etiqueta> arrayEtiquetas = new ArrayList<>(listaEtiquetas);
+
+        return arrayEtiquetas;
+    }
+
+    @Override
+    public ArrayList<Etiqueta> obtenerEtiquetasPorJuegoRestantes(Session session, int idJuego) {
+        String query = "SELECT DISTINCT e FROM Etiqueta e WHERE NOT EXISTS (" +
+                "SELECT j FROM e.juegos j WHERE j.id = :idJuego" +
+                ")";
+        List<Etiqueta> listaEtiquetas = session.createQuery(query, Etiqueta.class)
+                .setParameter("idJuego", idJuego)
+                .getResultList();
+        ArrayList<Etiqueta> arrayEtiquetas = new ArrayList<>(listaEtiquetas);
+
+        return arrayEtiquetas;
     }
 
     @Override

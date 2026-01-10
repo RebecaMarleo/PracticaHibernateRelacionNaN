@@ -30,9 +30,11 @@ public class EtiquetasController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         factory = HibernateUtil.getSessionFactory();
         session = HibernateUtil.getSession();
+
         if (Main.ventanaJuegos) {
             Main.ventanaMenu = false;
         }
+
         cargarEtiquetas();
     }
 
@@ -173,7 +175,6 @@ public class EtiquetasController implements Initializable {
 
                 this.btnModificar.setDisable(false);
                 this.btnBorrar.setDisable(false);
-                this.tblJuegos.setDisable(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -220,7 +221,7 @@ public class EtiquetasController implements Initializable {
     private void cargarJuegos(String nombre) {
         try {
             tblJuegos.getItems().clear();
-            List<Juego> juegos = juegoDAO.cargarJuegosPorEtiqueta(session, nombre);
+            List<Juego> juegos = juegoDAO.obtenerJuegosPorEtiqueta(session, nombre);
             ObservableList<Juego> datosJuegos = tblJuegos.getItems();
             datosJuegos.addAll(juegos);
 
@@ -243,6 +244,5 @@ public class EtiquetasController implements Initializable {
 
         this.btnModificar.setDisable(true);
         this.btnBorrar.setDisable(true);
-        this.tblJuegos.setDisable(true);
     }
 }

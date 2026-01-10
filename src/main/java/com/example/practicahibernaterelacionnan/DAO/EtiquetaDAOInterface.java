@@ -4,6 +4,7 @@ import com.example.practicahibernaterelacionnan.Modelo.Etiqueta;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface EtiquetaDAOInterface {
     void nuevaEtiqueta(Session session, Etiqueta etiqueta);
@@ -13,6 +14,10 @@ public interface EtiquetaDAOInterface {
     void borrarEtiqueta(Session session, Etiqueta etiqueta);
 
     ArrayList<Etiqueta> obtenerEtiquetas(Session session);
+
+    ArrayList<Etiqueta> obtenerEtiquetasPorJuego(Session session, int idJuego);
+
+    ArrayList<Etiqueta> obtenerEtiquetasPorJuegoRestantes(Session session, int idJuego);
 
     Etiqueta obtenerEtiqueta(Session session, String nombre);
 
