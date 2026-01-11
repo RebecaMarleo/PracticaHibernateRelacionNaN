@@ -4,6 +4,7 @@ import com.example.practicahibernaterelacionnan.DAO.EtiquetaDAO;
 import com.example.practicahibernaterelacionnan.DAO.JuegoDAO;
 import com.example.practicahibernaterelacionnan.DAO.PegiDAO;
 import com.example.practicahibernaterelacionnan.Main;
+import com.example.practicahibernaterelacionnan.Modelo.Cliente;
 import com.example.practicahibernaterelacionnan.Modelo.Etiqueta;
 import com.example.practicahibernaterelacionnan.Modelo.Juego;
 import com.example.practicahibernaterelacionnan.Util.AlertUtils;
@@ -122,6 +123,9 @@ public class JuegosController implements Initializable {
             // si hay un juego con el titulo proporcionado se muestra un aviso
             if (juegoExiste) {
                 AlertUtils.Alerts("ERROR", "Error", "", "Ya existe un juego con ese título").showAndWait();
+                Juego juego = juegoDAO.obtenerJuego(session, titulo);
+                tblJuegos.getSelectionModel().select(juego);
+                cargarEtiquetas(juego.getId());
             } else {
                 String precioCompraTxt = this.txtPrecioCompra.getText();
                 String precioVentaTxt = this.txtPrecioVenta.getText();
@@ -173,6 +177,9 @@ public class JuegosController implements Initializable {
                 // si hay un juego con el titulo proporcionado se muestra un aviso
                 if (juegoExiste) {
                     AlertUtils.Alerts("ERROR", "Error", "", "Ya existe un juego con ese título").showAndWait();
+                    Juego juegoExistente = juegoDAO.obtenerJuego(session, titulo);
+                    tblJuegos.getSelectionModel().select(juegoExistente);
+                    cargarEtiquetas(juegoExistente.getId());
                 } else {
                     String precioCompraTxt = this.txtPrecioCompra.getText();
                     String precioVentaTxt = this.txtPrecioVenta.getText();
@@ -257,7 +264,7 @@ public class JuegosController implements Initializable {
             if (juego == null) {
                 AlertUtils.Alerts("ERROR", "Error", "", "No has seleccionado ningún juego").showAndWait();
             } else {
-                Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar juego", "", "Se va a borrar el juego. Este cambio no es reversible. ¿Deseas continuar?");
+                Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar juego", "", "Se va a borrar el juego. Esta acción no es reversible. ¿Deseas continuar?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     juegoDAO.borrarJuego(session, juego);
@@ -419,8 +426,8 @@ public class JuegosController implements Initializable {
     }
 
     private void cargarEtiquetas(Integer idJuego) {
-        lvEtiquetasDelJuego.getItems().clear();
         try {
+            lvEtiquetasDelJuego.getItems().clear();
             // si se ha proporcionado un id para el juego seleccionado
             if (idJuego != null) {
                 // las etiquetas que tiene el juego

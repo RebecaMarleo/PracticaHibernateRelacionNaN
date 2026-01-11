@@ -126,6 +126,11 @@ public class Juego {
         return propPrecioVenta.asObject();
     }
 
+    public ObservableValue<Double> precioCompraProperty() {
+        DoubleProperty propPrecioCompra = new SimpleDoubleProperty(precioCompra);
+        return propPrecioCompra.asObject();
+    }
+
     public ObservableValue<String> pegiProperty() {
         StringProperty propPegi = new SimpleStringProperty(pegi);
         return propPegi;

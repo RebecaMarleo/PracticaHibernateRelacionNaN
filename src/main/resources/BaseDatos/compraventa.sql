@@ -5,7 +5,6 @@ USE CompraventaVideojuegos;
 CREATE TABLE Cliente(
     idCliente INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     correo VARCHAR(50),
-    contrasena VARCHAR(256),
     nombre VARCHAR(100)
 );
 
@@ -56,12 +55,12 @@ CREATE TABLE Etiqueta_Juego(
 );
 
 INSERT INTO Cliente VALUES
-(1, "sandra@gmail.com", SHA2("Rebeca",256), "Sandra Diaz Bear"),
-(2, "pedro@hotmail.com", SHA2("Pedro",256), "Pedro García López"),
-(3, "juan@outlook.es", SHA2("Juan",256), "Juan Gómez Alario"),
-(4, "maria@live.com", SHA2("María",256), "María Molinero Sánchez"),
-(5, "ana@icloud.com", SHA2("Ana",256), "Ana Martín López"),
-(6, "angel@educa.jcyl.es", SHA2("Ángel",256), "Ángel Hernández Garrido");
+(1, "sandra@gmail.com", "Sandra Diaz Bear"),
+(2, "pedro@hotmail.com", "Pedro García López"),
+(3, "juan@outlook.es", "Juan Gómez Alario"),
+(4, "maria@live.com", "María Molinero Sánchez"),
+(5, "ana@icloud.com", "Ana Martín López"),
+(6, "angel@educa.jcyl.es", "Ángel Hernández Garrido");
 
 INSERT INTO Empleado VALUES
 (1, "rebeca@gmail.com", SHA2("Rebeca",256), "Rebeca Martínez de León"),

@@ -1,5 +1,6 @@
 package com.example.practicahibernaterelacionnan.DAO;
 
+import com.example.practicahibernaterelacionnan.Modelo.Cliente;
 import com.example.practicahibernaterelacionnan.Modelo.Etiqueta;
 import com.example.practicahibernaterelacionnan.Modelo.Juego;
 import org.hibernate.Session;
@@ -17,6 +18,10 @@ public interface JuegoDAOInterface {
     ArrayList<Juego> obtenerJuegos(Session session);
 
     List<Juego> obtenerJuegosPorEtiqueta(Session session, String nombre);
+
+    List<Juego> obtenerJuegosPorTransaccion(Session session, int idTransaccion);
+
+    Juego obtenerJuego(Session session, String titulo);
 
     boolean comprobarJuego(Session session, String titulo);
 

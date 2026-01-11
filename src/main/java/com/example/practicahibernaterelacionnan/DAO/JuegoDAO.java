@@ -1,6 +1,9 @@
 package com.example.practicahibernaterelacionnan.DAO;
 
+import com.example.practicahibernaterelacionnan.Modelo.Cliente;
+import com.example.practicahibernaterelacionnan.Modelo.Etiqueta;
 import com.example.practicahibernaterelacionnan.Modelo.Juego;
+import com.example.practicahibernaterelacionnan.Modelo.Juego_Transaccion;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -47,6 +50,26 @@ public class JuegoDAO implements JuegoDAOInterface {
                 .getResultList();
 
         return listaJuegos;
+    }
+
+    @Override
+    public List<Juego> obtenerJuegosPorTransaccion(Session session, int idTransaccion) {
+        String query = "SELECT DISTINCT j FROM Juego j JOIN FETCH j.juego_transacciones jt WHERE jt.transaccion.id = :idTransaccion";
+        List<Juego> listaJuegos = session.createQuery(query, Juego.class)
+                .setParameter("idTransaccion", idTransaccion)
+                .getResultList();
+
+        return listaJuegos;
+    }
+
+    @Override
+    public Juego obtenerJuego(Session session, String titulo) {
+        String query = "FROM Juego WHERE titulo = :titulo";
+        Juego juego = session.createQuery(query, Juego.class)
+                .setParameter("titulo", titulo)
+                .getSingleResult();
+
+        return juego;
     }
 
     @Override

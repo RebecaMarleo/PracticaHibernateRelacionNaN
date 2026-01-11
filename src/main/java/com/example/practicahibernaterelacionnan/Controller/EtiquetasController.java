@@ -97,20 +97,23 @@ public class EtiquetasController implements Initializable {
             } else {
                 // comprueba si ya existe una etiqueta con el mismo nombre
                 boolean etiquetaExiste = etiquetaDAO.comprobarEtiqueta(session, nombre);
-                // si hay una etiqueta con el nombre proporcionado se muestra un aviso
+                // si hay una etiqueta con el nombre proporcionado se muestra un aviso y muestra los datos de esa etiqueta
                 if (etiquetaExiste) {
                     AlertUtils.Alerts("ERROR", "Error", "", "Ya existe una etiqueta con ese nombre").showAndWait();
+                    lvEtiquetas.getSelectionModel().select(nombre);
+                    cargarJuegos(nombre);
                 } else {
                     Etiqueta etiqueta = new Etiqueta(nombre);
                     etiquetaDAO.nuevaEtiqueta(session, etiqueta);
+
+                    cargarEtiquetas();
+                    vaciarCampos();
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             AlertUtils.Alerts("ERROR", "Error", "", "Se ha producido un error").showAndWait();
         }
-        cargarEtiquetas();
-        vaciarCampos();
     }
 
     @FXML
@@ -125,15 +128,24 @@ public class EtiquetasController implements Initializable {
                 if (nuevoNombre.isEmpty()) {
                     AlertUtils.Alerts("ERROR", "Error", "", "Debes introducir un nuevo nombre para la etiqueta").showAndWait();
                 } else {
-                    Alert alert = AlertUtils.Alerts("CONFIRMATION", "Modificar etiqueta", "", "Se sobreescribirán los datos de la etiqueta seleccionada con los nuevos proporcionados. Este cambio no es reversible. ¿Deseas continuar?");
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.isPresent() && result.get() == ButtonType.OK) {
-                        etiqueta.setNombre(nuevoNombre);
-                        etiquetaDAO.modificarEtiqueta(session, etiqueta);
+                    // comprueba si ya existe una etiqueta con el mismo nombre
+                    boolean etiquetaExiste = etiquetaDAO.comprobarEtiqueta(session, nombre);
+                    // si hay una etiqueta con el nombre proporcionado se muestra un aviso y muestra los datos de esa etiqueta
+                    if (etiquetaExiste) {
+                        AlertUtils.Alerts("ERROR", "Error", "", "Ya existe una etiqueta con ese nombre").showAndWait();
+                        lvEtiquetas.getSelectionModel().select(nuevoNombre);
+                        cargarJuegos(nuevoNombre);
+                    } else {
+                        Alert alert = AlertUtils.Alerts("CONFIRMATION", "Modificar etiqueta", "", "Se sobreescribirán los datos de la etiqueta seleccionada con los nuevos proporcionados. Este cambio no es reversible. ¿Deseas continuar?");
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            etiqueta.setNombre(nuevoNombre);
+                            etiquetaDAO.modificarEtiqueta(session, etiqueta);
+                        }
+                        cargarEtiquetas();
+                        vaciarCampos();
                     }
                 }
-                cargarEtiquetas();
-                vaciarCampos();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,7 +161,7 @@ public class EtiquetasController implements Initializable {
                 AlertUtils.Alerts("ERROR", "Error", "", "No has seleccionado ninguna etiqueta").showAndWait();
             } else {
                 Etiqueta etiqueta = etiquetaDAO.obtenerEtiqueta(session, nombre);
-                Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar etiqueta", "", "Se va a borrar la etiqueta. Este cambio no es reversible. ¿Deseas continuar?");
+                Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar etiqueta", "", "Se va a borrar la etiqueta. Esta acción no es reversible. ¿Deseas continuar?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     etiquetaDAO.borrarEtiqueta(session, etiqueta);
@@ -203,8 +215,8 @@ public class EtiquetasController implements Initializable {
     }
 
     private void cargarEtiquetas() {
-        lvEtiquetas.getItems().clear();
         try {
+            lvEtiquetas.getItems().clear();
             this.etiquetas = etiquetaDAO.obtenerEtiquetas(session);
             ArrayList<String> nombres = new ArrayList<>();
 

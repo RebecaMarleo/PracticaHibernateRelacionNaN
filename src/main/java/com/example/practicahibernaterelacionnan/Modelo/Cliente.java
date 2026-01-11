@@ -1,5 +1,11 @@
 package com.example.practicahibernaterelacionnan.Modelo;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,9 +20,6 @@ public class Cliente {
     @Column(name="correo")
     private String correo;
 
-    @Column(name="contrasena")
-    private String contrasena;
-
     @Column(name="nombre")
     private String nombre;
 
@@ -29,16 +32,14 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(int id, String correo, String contrasena, String nombre) {
+    public Cliente(int id, String correo, String nombre) {
         this.id = id;
         this.correo = correo;
-        this.contrasena = contrasena;
         this.nombre = nombre;
     }
 
-    public Cliente(String correo, String contrasena, String nombre) {
+    public Cliente(String correo, String nombre) {
         this.correo = correo;
-        this.contrasena = contrasena;
         this.nombre = nombre;
     }
 
@@ -58,19 +59,26 @@ public class Cliente {
         this.correo = correo;
     }
 
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public ObservableValue<Number> idProperty() {
+        IntegerProperty propId = new SimpleIntegerProperty(id);
+        return propId;
+    }
+
+    public ObservableValue<String> correoProperty() {
+        StringProperty propCorreo = new SimpleStringProperty(correo);
+        return propCorreo;
+    }
+
+    public ObservableValue<String> nombreProperty() {
+        StringProperty propNombre = new SimpleStringProperty(nombre);
+        return propNombre;
     }
 }
