@@ -51,7 +51,7 @@ public class Juego {
         this.pegi = pegi;
     }
 
-    public Juego(int id, String titulo, double precioVenta, double precioCOmpra, String pegi) {
+    public Juego(int id, String titulo, double precioVenta, double precioCompra, String pegi) {
         this.id = id;
         this.titulo = titulo;
         this.precioVenta = precioVenta;

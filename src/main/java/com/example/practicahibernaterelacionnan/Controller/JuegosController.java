@@ -43,6 +43,21 @@ public class JuegosController implements Initializable {
 
         cargarJuegos();
         cargarEtiquetas(null);
+
+        // si viene desde una pantalla donde se ha seleccionado un juego se precargan los datos del juego elegido
+        if (Main.juego != null) {
+            int idJuego = Main.juego.getId();
+            this.txtId.setText(String.valueOf(idJuego));
+            this.txtTitulo.setText(Main.juego.getTitulo());
+            this.txtPrecioCompra.setText(String.valueOf(Main.juego.getPrecioCompra()));
+            this.txtPrecioVenta.setText(String.valueOf(Main.juego.getPrecioVenta()));
+            this.cboxPegi.setValue(Main.juego.getPegi());
+
+            cargarEtiquetas(idJuego);
+
+            this.btnModificar.setDisable(false);
+            this.btnBorrar.setDisable(false);
+        }
     }
 
     SessionFactory factory;

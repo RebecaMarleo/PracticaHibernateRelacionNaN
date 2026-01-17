@@ -89,7 +89,7 @@ INSERT INTO Transaccion VALUES
 (6, 3, 1, 59.98, "Compra"),
 (7, 4, 2, 69.99, "Venta"),
 (8, 5, 2, 105.46, "Compra"),
-(9, 5, 3, 99.96, "Venta");
+(9, 5, 3, 129.96, "Venta");
 
 INSERT INTO Juego_Transaccion VALUES
 (1, 1, 1, 2),

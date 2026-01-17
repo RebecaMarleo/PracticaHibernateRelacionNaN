@@ -38,6 +38,19 @@ public class ClientesController implements Initializable {
         }
 
         cargarClientes();
+
+        // si viene desde una pantalla donde se ha seleccionado un cliente se precargan los datos del cliente elegido
+        if (Main.cliente != null) {
+            int idCliente = Main.cliente.getId();
+            this.txtId.setText(String.valueOf(idCliente));
+            this.txtCorreo.setText(Main.cliente.getCorreo());
+            this.txtNombre.setText(String.valueOf(Main.cliente.getNombre()));
+
+            cargarTransacciones(idCliente);
+
+            this.btnModificar.setDisable(false);
+            this.btnBorrar.setDisable(false);
+        }
     }
 
     SessionFactory factory;
@@ -258,6 +271,8 @@ public class ClientesController implements Initializable {
             this.txtTotal.setText(String.valueOf(transaccion.getTotal()));
 
             cargarJuegos(idTransaccion, transaccion.getTipo());
+            // hay que recargar el catalogo tambien por si se ha cambiado el tipo de compra
+            cargarJuegos(null, transaccion.getTipo());
         } catch (Exception e) {
             e.printStackTrace();
             AlertUtils.Alerts("ERROR", "Error", "", "Se ha producido un error").showAndWait();

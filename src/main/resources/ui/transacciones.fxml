@@ -15,25 +15,26 @@
         <Pane prefHeight="575.0" prefWidth="1000.0">
             <children>
                 <Label layoutX="47.0" layoutY="45.0" text="ID" />
-                <TextField fx:id="txtId" layoutX="115.0" layoutY="41.0" prefHeight="25.0" prefWidth="399.0" />
+                <TextField fx:id="txtId" editable="false" layoutX="115.0" layoutY="41.0" prefHeight="25.0" prefWidth="399.0" />
                 <Label layoutX="47.0" layoutY="73.0" text="Cliente" />
-                <ComboBox fx:id="cbCliente" layoutX="115.0" layoutY="69.0" prefHeight="25.0" prefWidth="323.0" />
+                <ComboBox fx:id="cboxCliente" layoutX="115.0" layoutY="69.0" prefHeight="25.0" prefWidth="323.0" />
             <Button fx:id="btnGestionarClientes" layoutX="447.0" layoutY="69.0" mnemonicParsing="false" onAction="#onBtnGestionarClientes" text="Gestionar" />
                 <Label layoutX="47.0" layoutY="103.0" text="Empleado" />
-                <TextField fx:id="txtEmpleado" layoutX="115.0" layoutY="99.0" prefHeight="25.0" prefWidth="399.0" />
+                <TextField fx:id="txtEmpleado" editable="false" layoutX="115.0" layoutY="99.0" prefHeight="25.0" prefWidth="399.0" />
                 <Label layoutX="47.0" layoutY="134.0" text="Tipo de transacción" />
-            <ComboBox fx:id="cbTransaccion" layoutX="343.0" layoutY="130.0" prefHeight="25.0" prefWidth="171.0" />
+            <ComboBox fx:id="cboxTransaccion" layoutX="343.0" layoutY="130.0" onAction="#onCboxTransaccion" prefHeight="25.0" prefWidth="171.0" />
                 <Label layoutX="569.0" layoutY="45.0" text="Juegos seleccionados" />
-                <TableView fx:id="tblJuegos" layoutX="569.0" layoutY="67.0" prefHeight="115.0" prefWidth="381.0">
-                    <columns>
-                        <TableColumn fx:id="colJuegosId" prefWidth="52.0" text="ID" />
-                        <TableColumn fx:id="colJuegosTitulo" prefWidth="208.0" text="Título" />
-                        <TableColumn fx:id="colJuegosPrecio" prefWidth="53.0" text="Precio" />
-                        <TableColumn fx:id="colJuegosPegi" prefWidth="67.0" text="PEGI" />
-                    </columns>
-                </TableView>
+            <TableView fx:id="tblJuegos" layoutX="567.0" layoutY="67.0" prefHeight="115.0" prefWidth="381.0">
+               <columns>
+                  <TableColumn fx:id="colJueId" prefWidth="52.0" text="ID" />
+                  <TableColumn fx:id="colJueTitulo" prefWidth="145.0" text="Título" />
+                  <TableColumn fx:id="colJuePrecio" prefWidth="58.0" text="Precio" />
+                  <TableColumn fx:id="colJuePegi" prefWidth="54.0" text="PEGI" />
+                  <TableColumn fx:id="colJueCantidad" prefWidth="75.0" text="Cantidad" />
+               </columns>
+            </TableView>
             <Label layoutX="746.0" layoutY="193.0" text="TOTAL:" />
-            <TextField fx:id="txtTotal" layoutX="801.0" layoutY="189.0" />
+            <TextField fx:id="txtTotal" editable="false" layoutX="801.0" layoutY="189.0" />
             <Label layoutX="569.0" layoutY="229.0" text="Cantidad" />
             <TextField fx:id="txtCantidad" layoutX="626.0" layoutY="225.0" />
                 <Button fx:id="btnQuitar" layoutX="792.0" layoutY="225.0" mnemonicParsing="false" onAction="#onBtnQuitar" text="Quitar" />
@@ -57,7 +58,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TableView fx:id="tblTransacciones" layoutX="46.0" layoutY="216.0" prefHeight="291.0" prefWidth="468.0">
+            <TableView fx:id="tblTransacciones" layoutX="46.0" layoutY="216.0" onMouseClicked="#onFilaSeleccionadaTablaTransacciones" prefHeight="291.0" prefWidth="468.0">
               <columns>
                 <TableColumn fx:id="colTransId" prefWidth="52.0" text="ID" />
                 <TableColumn fx:id="colTransCliente" prefWidth="140.0" text="Cliente" />
@@ -67,8 +68,8 @@
               </columns>
             </TableView>
                 <Button fx:id="btnCrear" layoutX="61.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
-                <Button fx:id="btnModificar" layoutX="117.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
-                <Button fx:id="btnBorrar" layoutX="194.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
+                <Button fx:id="btnModificar" disable="true" layoutX="117.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
+                <Button fx:id="btnBorrar" disable="true" layoutX="194.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
             <Button fx:id="btnAceptar" layoutX="364.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnAceptar" text="Aceptar" />
             <Button fx:id="btnCancelar" layoutX="429.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnCancelar" text="Cancelar" />
             <Button fx:id="btnVolver" layoutY="-1.0" mnemonicParsing="false" onAction="#onBtnVolver" text="&lt;  VOLVER A LA PÁGINA ANTERIOR">

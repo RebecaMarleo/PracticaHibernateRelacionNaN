@@ -1,5 +1,6 @@
 package com.example.practicahibernaterelacionnan;
 
+import com.example.practicahibernaterelacionnan.Modelo.*;
 import com.example.practicahibernaterelacionnan.Util.R;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,10 +19,16 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static String correo;
-//    public static String ventanaAnterior;
+    public static Empleado empleadoLogin;
     public static boolean ventanaJuegos;
     public static boolean ventanaTransacciones;
     public static boolean ventanaMenu;
     public static Stage stage;
+
+    // variables para cargar ventanas con datos
+    public static Cliente cliente;
+    public static Empleado empleado;
+    public static Etiqueta etiqueta;
+    public static Juego juego;
+    public static Transaccion transaccion;
 }

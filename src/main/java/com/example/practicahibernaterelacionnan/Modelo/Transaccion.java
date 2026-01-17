@@ -1,5 +1,8 @@
 package com.example.practicahibernaterelacionnan.Modelo;
 
+import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -90,6 +93,31 @@ public class Transaccion {
 
     public Set<Juego_Transaccion> getJuegoTransacciones() {
         return juego_transacciones;
+    }
+
+    public ObservableValue<Number> idProperty() {
+        IntegerProperty propId = new SimpleIntegerProperty(id);
+        return propId;
+    }
+
+    public ObservableValue<String> clienteProperty() {
+        StringProperty propCliente = new SimpleStringProperty(cliente.getNombre());
+        return propCliente;
+    }
+
+    public ObservableValue<String> empleadoProperty() {
+        StringProperty propEmpleado = new SimpleStringProperty(empleado.getNombre());
+        return propEmpleado;
+    }
+
+    public ObservableValue<Double> totalProperty() {
+        DoubleProperty propTotal = new SimpleDoubleProperty(total);
+        return propTotal.asObject();
+    }
+
+    public ObservableValue<String> tipoProperty() {
+        StringProperty propTipo = new SimpleStringProperty(tipo);
+        return propTipo;
     }
 
     public void setJuegoTransacciones(Set<Juego_Transaccion> juego_transacciones) {

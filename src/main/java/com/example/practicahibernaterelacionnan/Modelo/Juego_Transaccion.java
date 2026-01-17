@@ -1,5 +1,8 @@
 package com.example.practicahibernaterelacionnan.Modelo;
 
+import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
+
 import javax.persistence.*;
 
 @Entity
@@ -67,5 +70,35 @@ public class Juego_Transaccion {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public ObservableValue<Number> idProperty() {
+        IntegerProperty propId = new SimpleIntegerProperty(juego.getId());
+        return propId;
+    }
+
+    public ObservableValue<String> tituloProperty() {
+        StringProperty propTitulo = new SimpleStringProperty(juego.getTitulo());
+        return propTitulo;
+    }
+
+    public ObservableValue<Double> precioVentaProperty() {
+        DoubleProperty propPrecioVenta = new SimpleDoubleProperty(juego.getPrecioVenta());
+        return propPrecioVenta.asObject();
+    }
+
+    public ObservableValue<Double> precioCompraProperty() {
+        DoubleProperty propPrecioCompra = new SimpleDoubleProperty(juego.getPrecioCompra());
+        return propPrecioCompra.asObject();
+    }
+
+    public ObservableValue<String> pegiProperty() {
+        StringProperty propPegi = new SimpleStringProperty(juego.getPegi());
+        return propPegi;
+    }
+
+    public ObservableValue<Number> cantidadProperty() {
+        IntegerProperty propCantidad = new SimpleIntegerProperty(cantidad);
+        return propCantidad;
     }
 }
