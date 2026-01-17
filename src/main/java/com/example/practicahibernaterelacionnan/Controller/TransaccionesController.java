@@ -43,8 +43,6 @@ public class TransaccionesController implements Initializable {
 
         Main.ventanaTransacciones = false;
 
-        // TODO quitar esta linea cuando empleadoLogin tenga un valor proveniente del login
-        Main.empleadoLogin = empleadoDAO.obtenerEmpleado(session, "rebeca@gmail.com");
         this.txtEmpleado.setText(Main.empleadoLogin.getNombre());
         cargarTransacciones();
         cargarJuegos(null, "");
@@ -196,8 +194,7 @@ public class TransaccionesController implements Initializable {
             Empleado empleado = Main.empleadoLogin;
             double total = Double.parseDouble(txtTotal.getText());
             String tipo = cboxTransaccion.getValue();
-            // TODO obtener mejor el correo del empleadoLogin
-            if (correoCliente.isEmpty() || empleado.getNombre().isEmpty() || tipo.isEmpty()) {
+            if (correoCliente.isEmpty() || empleado.getCorreo().isEmpty() || tipo.isEmpty()) {
                 AlertUtils.Alerts("ERROR", "Error", "", "Hay campos vacíos").showAndWait();
             } else {
                 Cliente cliente = clienteDAO.obtenerCliente(session, correoCliente);
