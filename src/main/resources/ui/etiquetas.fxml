@@ -35,8 +35,7 @@
                 <Button fx:id="btnCrear" layoutX="57.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
                 <Button fx:id="btnModificar" disable="true" layoutX="111.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
                 <Button fx:id="btnBorrar" disable="true" layoutX="189.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
-                <Button fx:id="btnAceptar" layoutX="280.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnAceptar" text="Aceptar" />
-                <Button fx:id="btnCancelar" layoutX="343.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCancelar" text="Cancelar" />
+                <Button fx:id="btnGestionar" layoutX="595.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnGestionar" text="Gestionar" />
                 <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#onBtnVolver" text="&lt;  VOLVER A LA PÁGINA ANTERIOR">
                     <font>
                         <Font name="System Bold" size="14.0" />

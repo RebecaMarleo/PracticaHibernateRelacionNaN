@@ -6,5 +6,5 @@ import org.hibernate.Session;
 public interface EmpleadoDAOInterface {
     Empleado obtenerEmpleado(Session session, String correo);
 
-    boolean comprobarCredenciales(String dni, String pass);
+    boolean comprobarCredenciales(Session session, String correo, String contrasena);
 }

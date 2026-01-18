@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
             } else {
                 String sha256hex1 = DigestUtils.sha256Hex(pass);
 
-                boolean loginCorrecto = empleadoDAO.comprobarCredenciales(correo, sha256hex1);
+                boolean loginCorrecto = empleadoDAO.comprobarCredenciales(session, correo, sha256hex1);
 
                 if (loginCorrecto) {
                     Main.empleadoLogin = empleadoDAO.obtenerEmpleado(session, correo);

@@ -41,7 +41,17 @@ public class TransaccionesController implements Initializable {
         }
         this.cboxCliente.setItems(FXCollections.observableArrayList(listaClientes));
 
-        Main.ventanaTransacciones = false;
+        if (Main.ventanaTransOVentanaEtiq != null) {
+            if (Main.ventanaTransOVentanaEtiq.isEmpty()) {
+                Main.ventanaTransacciones = false;
+            }
+        }
+
+        if (Main.ventanaClientes || Main.ventanaJuegos) {
+            Main.ventanaMenu = false;
+        } else {
+            Main.ventanaMenu = true;
+        }
 
         this.txtEmpleado.setText(Main.empleadoLogin.getNombre());
         cargarTransacciones();
@@ -62,6 +72,8 @@ public class TransaccionesController implements Initializable {
 
             this.btnModificar.setDisable(false);
             this.btnBorrar.setDisable(false);
+
+            tblTransacciones.getSelectionModel().select(Main.transaccion);
         }
     }
 
@@ -76,17 +88,13 @@ public class TransaccionesController implements Initializable {
 
     private ArrayList<Juego_Transaccion> juegosSeleccionados = new ArrayList<>();
 
-    @FXML
-    private Button btnAceptar;
+    private String tipoUltimoJuegoSeleccionado = "";
 
     @FXML
     private Button btnAnadir;
 
     @FXML
     private Button btnBorrar;
-
-    @FXML
-    private Button btnCancelar;
 
     @FXML
     private Button btnCrear;
@@ -183,7 +191,6 @@ public class TransaccionesController implements Initializable {
 
         // actualizar también el total
         ObservableList<Juego_Transaccion> datosJuego_transacciones = tblJuegos.getItems();
-        System.out.println("datos " + datosJuego_transacciones);
         calcularTotal(datosJuego_transacciones);
     }
 
@@ -241,6 +248,13 @@ public class TransaccionesController implements Initializable {
                         transaccion.setTotal(total);
                         transaccion.setTipo(tipo);
                         transaccionDAO.modificarTransaccion(session, transaccion);
+
+                        if (Main.transaccion != null) {
+                            // comprueba si la transacción que se va a modificar es la misma que la última que se había seleccionado y si coinciden actualiza la selección
+                            if (Main.transaccion.equals(transaccion)) {
+                                Main.transaccion = transaccion;
+                            }
+                        }
 
                         // se comprueban los juegos asociados a la transacción
                         int idTransaccion = transaccion.getId();
@@ -302,6 +316,12 @@ public class TransaccionesController implements Initializable {
                 Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar transacción", "", "Se va a borrar la transacción. Esta acción no es reversible. ¿Deseas continuar?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
+                    if (Main.transaccion != null) {
+                        // comprueba si la transacción que se va a borrar es la misma que la última que se había seleccionado y si coinciden vacía la selección
+                        if (Main.transaccion.equals(transaccion)) {
+                            Main.transaccion = null;
+                        }
+                    }
                     transaccionDAO.borrarTransaccion(session, transaccion);
                 }
                 cargarTransacciones();
@@ -311,16 +331,6 @@ public class TransaccionesController implements Initializable {
             e.printStackTrace();
             AlertUtils.Alerts("ERROR", "Error", "", "Se ha producido un error").showAndWait();
         }
-    }
-
-    @FXML
-    void onBtnAceptar(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onBtnCancelar(ActionEvent event) {
-
     }
 
     @FXML
@@ -452,10 +462,30 @@ public class TransaccionesController implements Initializable {
     }
 
     @FXML
+    void onFilaSeleccionadaTablaJuegos(MouseEvent event) {
+        tipoUltimoJuegoSeleccionado = "Juegos";
+    }
+
+    @FXML
+    void onFilaSeleccionadaTablaCatalogo(MouseEvent event) {
+        tipoUltimoJuegoSeleccionado = "Catalogo";
+    }
+
+    @FXML
     void onBtnGestionarCatalogo(ActionEvent event) throws IOException {
         Main.ventanaTransacciones = true;
+        Main.ventanaTransOVentanaEtiq = "Transacciones";
         try {
-            Main.juego = tblCatalogo.getSelectionModel().getSelectedItem().getJuego();
+            switch (tipoUltimoJuegoSeleccionado) {
+                case "Juegos":
+                    Main.juego = tblJuegos.getSelectionModel().getSelectedItem().getJuego();
+                    break;
+                case "Catalogo":
+                    Main.juego = tblCatalogo.getSelectionModel().getSelectedItem().getJuego();
+                    break;
+                default:
+                    break;
+            }
         } catch (Exception e) {}
         try {
             Main.transaccion = tblTransacciones.getSelectionModel().getSelectedItem();
@@ -478,10 +508,16 @@ public class TransaccionesController implements Initializable {
 
     @FXML
     void onBtnVolver(ActionEvent event) throws IOException {
-        Main.juego = null;
-        Main.cliente = null;
-        Main.transaccion = null;
-        SceneManager.showVentana(event, "menu", 300, 325);
+        Main.ventanaTransacciones = false;
+        if (Main.ventanaMenu) {
+            SceneManager.showVentana(event, "menu", 300, 325);
+        } else if (Main.ventanaClientes) {
+            Main.ventanaMenu = true;
+            SceneManager.showVentana(event, "clientes", 900, 475);
+        } else if (Main.ventanaJuegos || Main.ventanaTransOVentanaEtiq.equals("Etiquetas")) {
+            Main.ventanaMenu = true;
+            SceneManager.showVentana(event, "juegos", 700, 475);
+        }
     }
 
     private void cargarTransacciones() {

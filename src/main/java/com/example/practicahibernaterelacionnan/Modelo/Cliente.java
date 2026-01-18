@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="Cliente")
@@ -80,5 +81,17 @@ public class Cliente {
     public ObservableValue<String> nombreProperty() {
         StringProperty propNombre = new SimpleStringProperty(nombre);
         return propNombre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return getId() == cliente.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

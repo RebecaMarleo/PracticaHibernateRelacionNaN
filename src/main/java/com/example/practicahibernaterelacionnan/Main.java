@@ -20,9 +20,13 @@ public class Main extends Application {
     }
 
     public static Empleado empleadoLogin;
+    public static boolean ventanaClientes;
+    public static boolean ventanaEtiquetas;
     public static boolean ventanaJuegos;
     public static boolean ventanaTransacciones;
     public static boolean ventanaMenu;
+    // para ver si por la última vez ha pasado por la ventana de transacciones o la de etiquetas y cual priorizar al salir de la ventana de juegos
+    public static String ventanaTransOVentanaEtiq;
     public static Stage stage;
 
     // variables para cargar ventanas con datos

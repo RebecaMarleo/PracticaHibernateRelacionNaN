@@ -1,7 +1,6 @@
 package com.example.practicahibernaterelacionnan.Controller;
 
 import com.example.practicahibernaterelacionnan.DAO.ClienteDAO;
-import com.example.practicahibernaterelacionnan.DAO.JuegoDAO;
 import com.example.practicahibernaterelacionnan.DAO.Juego_TransaccionDAO;
 import com.example.practicahibernaterelacionnan.DAO.TransaccionDAO;
 import com.example.practicahibernaterelacionnan.Main;
@@ -33,6 +32,8 @@ public class ClientesController implements Initializable {
         factory = HibernateUtil.getSessionFactory();
         session = HibernateUtil.getSession();
 
+        Main.ventanaClientes = false;
+
         if (Main.ventanaTransacciones) {
             Main.ventanaMenu = false;
         }
@@ -50,6 +51,20 @@ public class ClientesController implements Initializable {
 
             this.btnModificar.setDisable(false);
             this.btnBorrar.setDisable(false);
+
+            tblClientes.getSelectionModel().select(Main.cliente);
+        }
+        // si había una transacción seleccionada se vuelve a cargar
+        if (Main.transaccion != null) {
+            int idTransaccion = Main.transaccion.getId();
+            Transaccion transaccion = transaccionDAO.obtenerTransaccion(session, idTransaccion);
+            this.txtEmpleado.setText(transaccion.getEmpleado().getNombre());
+            this.txtTipo.setText(transaccion.getTipo());
+            this.txtTotal.setText(String.valueOf(transaccion.getTotal()));
+
+            cargarJuegos(idTransaccion, transaccion.getTipo());
+
+            lvTransacciones.getSelectionModel().select(Main.transaccion.getId());
         }
     }
 
@@ -58,7 +73,6 @@ public class ClientesController implements Initializable {
 
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final TransaccionDAO transaccionDAO = new TransaccionDAO();
-    private final JuegoDAO juegoDAO = new JuegoDAO();
     private final Juego_TransaccionDAO juego_transaccionDAO = new Juego_TransaccionDAO();
 
     private ArrayList<Transaccion> transacciones = new ArrayList<>();
@@ -68,6 +82,9 @@ public class ClientesController implements Initializable {
 
     @FXML
     private Button btnCrear;
+
+    @FXML
+    private Button btnGestionar;
 
     @FXML
     private Button btnModificar;
@@ -85,19 +102,19 @@ public class ClientesController implements Initializable {
     private TableColumn<Cliente, String> colCliNombre;
 
     @FXML
-    private TableColumn<Juego, Number> colJueId;
+    private TableColumn<Juego_Transaccion, Number> colJueCantidad;
 
     @FXML
-    private TableColumn<Juego, String> colJuePegi;
+    private TableColumn<Juego_Transaccion, Number> colJueId;
 
     @FXML
-    private TableColumn<Juego, Double> colJuePrecio;
+    private TableColumn<Juego_Transaccion, String> colJuePegi;
 
     @FXML
-    private TableColumn<Juego, String> colJueTitulo;
+    private TableColumn<Juego_Transaccion, Double> colJuePrecio;
 
     @FXML
-    private ListView<String> lvCantidades;
+    private TableColumn<Juego_Transaccion, String> colJueTitulo;
 
     @FXML
     private ListView<String> lvTransacciones;
@@ -106,7 +123,7 @@ public class ClientesController implements Initializable {
     private TableView<Cliente> tblClientes;
 
     @FXML
-    private TableView<Juego> tblJuegos;
+    private TableView<Juego_Transaccion> tblJuegos;
 
     @FXML
     private TextField txtCorreo;
@@ -206,6 +223,13 @@ public class ClientesController implements Initializable {
                                 cliente.setCorreo(correo);
                                 cliente.setNombre(nombre);
                                 clienteDAO.modificarCliente(session, cliente);
+
+                                if (Main.cliente != null) {
+                                    // comprueba si el cliente que se va a modificar es el mismo que el último que se había seleccionado y si coinciden actualiza la selección
+                                    if (Main.cliente.equals(cliente)) {
+                                        Main.cliente = cliente;
+                                    }
+                                }
                             }
                             cargarClientes();
                             vaciarCampos();
@@ -229,6 +253,12 @@ public class ClientesController implements Initializable {
                 Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar cliente", "", "Se va a borrar el cliente. Esta acción no es reversible. ¿Deseas continuar?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
+                    if (Main.cliente != null) {
+                        // comprueba si el cliente que se va a borrar es el misma que el último que se había seleccionado y si coinciden vacía la selección
+                        if (Main.cliente.equals(cliente)) {
+                            Main.cliente = null;
+                        }
+                    }
                     clienteDAO.borrarCliente(session, cliente);
                 }
                 cargarClientes();
@@ -271,12 +301,26 @@ public class ClientesController implements Initializable {
             this.txtTotal.setText(String.valueOf(transaccion.getTotal()));
 
             cargarJuegos(idTransaccion, transaccion.getTipo());
-            // hay que recargar el catalogo tambien por si se ha cambiado el tipo de compra
-            cargarJuegos(null, transaccion.getTipo());
+        } catch (NumberFormatException nfe) {
+            // si seleccionas una fila que no tenga valor provocará un error al intentar parsearlo
+            // no hay que hacer ninguna acción cuando esto pasa pero tampoco es correcto que salte un error
         } catch (Exception e) {
             e.printStackTrace();
             AlertUtils.Alerts("ERROR", "Error", "", "Se ha producido un error").showAndWait();
         }
+    }
+
+    @FXML
+    void onBtnGestionar(ActionEvent event) throws IOException {
+        Main.ventanaClientes = true;
+        try {
+            int idTransaccion = Integer.parseInt(lvTransacciones.getSelectionModel().getSelectedItem());
+            Main.transaccion = transaccionDAO.obtenerTransaccion(session, idTransaccion);
+        } catch (Exception e) {}
+        try {
+            Main.cliente = tblClientes.getSelectionModel().getSelectedItem();
+        } catch (Exception e) {}
+        SceneManager.showVentana(event, "transacciones", 1000, 575);
     }
 
     @FXML
@@ -328,10 +372,9 @@ public class ClientesController implements Initializable {
     private void cargarJuegos(Integer idTransaccion, String tipo) {
         try {
             tblJuegos.getItems().clear();
-            lvCantidades.getItems().clear();
             if (idTransaccion != null) {
-                List<Juego> juegos = juegoDAO.obtenerJuegosPorTransaccion(session, idTransaccion);
-                ObservableList<Juego> datosJuegos = tblJuegos.getItems();
+                List<Juego_Transaccion> juegos = juego_transaccionDAO.obtenerJuegosPorTransaccion(session, idTransaccion);
+                ObservableList<Juego_Transaccion> datosJuegos = tblJuegos.getItems();
                 datosJuegos.addAll(juegos);
 
                 colJueId.setCellValueFactory(cellData -> cellData.getValue().idProperty());
@@ -342,14 +385,7 @@ public class ClientesController implements Initializable {
                     colJuePrecio.setCellValueFactory(cellData -> cellData.getValue().precioCompraProperty());
                 }
                 colJuePegi.setCellValueFactory(cellData -> cellData.getValue().pegiProperty());
-
-                // mostrar también las cantidades de cada juego
-                ArrayList<Juego_Transaccion> juego_transacciones = juego_transaccionDAO.obtenerJuegosPorTransaccion(session, idTransaccion);
-                ArrayList<String> cantidades = new ArrayList<>();
-                for (Juego_Transaccion juego_transaccion : juego_transacciones) {
-                    cantidades.add(String.valueOf(juego_transaccion.getCantidad()));
-                }
-                lvCantidades.setItems(FXCollections.observableArrayList(cantidades));
+                colJueCantidad.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty());
 
                 tblJuegos.setItems(datosJuegos);
             }

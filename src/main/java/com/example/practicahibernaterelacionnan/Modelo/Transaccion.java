@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -126,5 +127,17 @@ public class Transaccion {
 
     public void addJuegoTransaccion(Juego_Transaccion juego_transaccion) {
         this.juego_transacciones.add(juego_transaccion);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaccion that = (Transaccion) o;
+        return getId() == that.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

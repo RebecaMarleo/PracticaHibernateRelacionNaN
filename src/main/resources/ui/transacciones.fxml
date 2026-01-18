@@ -24,7 +24,7 @@
                 <Label layoutX="47.0" layoutY="134.0" text="Tipo de transacción" />
             <ComboBox fx:id="cboxTransaccion" layoutX="343.0" layoutY="130.0" onAction="#onCboxTransaccion" prefHeight="25.0" prefWidth="171.0" />
                 <Label layoutX="569.0" layoutY="45.0" text="Juegos seleccionados" />
-            <TableView fx:id="tblJuegos" layoutX="567.0" layoutY="67.0" prefHeight="115.0" prefWidth="381.0">
+            <TableView fx:id="tblJuegos" layoutX="567.0" layoutY="67.0" onMouseClicked="#onFilaSeleccionadaTablaJuegos" prefHeight="115.0" prefWidth="381.0">
                <columns>
                   <TableColumn fx:id="colJueId" prefWidth="52.0" text="ID" />
                   <TableColumn fx:id="colJueTitulo" prefWidth="145.0" text="Título" />
@@ -44,7 +44,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-            <TableView fx:id="tblCatalogo" layoutX="569.0" layoutY="289.0" prefHeight="217.0" prefWidth="381.0">
+            <TableView fx:id="tblCatalogo" layoutX="569.0" layoutY="289.0" onMouseClicked="#onFilaSeleccionadaTablaCatalogo" prefHeight="217.0" prefWidth="381.0">
                <columns>
                   <TableColumn fx:id="colCatId" prefWidth="52.0" text="ID" />
                   <TableColumn fx:id="colCatTitulo" prefWidth="208.0" text="Título" />
@@ -67,11 +67,9 @@
                   <TableColumn fx:id="colTransTipo" prefWidth="68.0" text="Tipo" />
               </columns>
             </TableView>
-                <Button fx:id="btnCrear" layoutX="61.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
-                <Button fx:id="btnModificar" disable="true" layoutX="117.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
-                <Button fx:id="btnBorrar" disable="true" layoutX="194.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
-            <Button fx:id="btnAceptar" layoutX="364.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnAceptar" text="Aceptar" />
-            <Button fx:id="btnCancelar" layoutX="429.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnCancelar" text="Cancelar" />
+                <Button fx:id="btnCrear" layoutX="174.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
+                <Button fx:id="btnModificar" disable="true" layoutX="243.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
+                <Button fx:id="btnBorrar" disable="true" layoutX="331.0" layoutY="525.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
             <Button fx:id="btnVolver" layoutY="-1.0" mnemonicParsing="false" onAction="#onBtnVolver" text="&lt;  VOLVER A LA PÁGINA ANTERIOR">
                <font>
                   <Font name="System Bold" size="14.0" />

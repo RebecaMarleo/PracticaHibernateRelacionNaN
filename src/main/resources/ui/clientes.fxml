@@ -32,11 +32,9 @@
                         <TableColumn fx:id="colCliNombre" prefWidth="163.0" text="Nombre" />
                     </columns>
                 </TableView>
-                <Button fx:id="btnCrear" layoutX="57.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
-                <Button fx:id="btnModificar" disable="true" layoutX="111.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
-                <Button fx:id="btnBorrar" disable="true" layoutX="189.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
-                <Button layoutX="280.0" layoutY="424.0" mnemonicParsing="false" text="Aceptar" />
-                <Button layoutX="343.0" layoutY="424.0" mnemonicParsing="false" text="Cancelar" />
+                <Button fx:id="btnCrear" layoutX="127.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
+                <Button fx:id="btnModificar" disable="true" layoutX="204.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
+                <Button fx:id="btnBorrar" disable="true" layoutX="301.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
                 <Label layoutX="471.0" layoutY="45.0" text="Transacciones" />
                 <ListView fx:id="lvTransacciones" layoutX="471.0" layoutY="62.0" onMouseClicked="#onFilaSeleccionadaTransacciones" prefHeight="124.0" prefWidth="200.0" />
             <Label layoutX="471.0" layoutY="203.0" text="Empleado" />
@@ -46,16 +44,15 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TableView fx:id="tblJuegos" layoutX="471.0" layoutY="255.0" prefHeight="159.0" prefWidth="310.0">
+            <TableView fx:id="tblJuegos" layoutX="471.0" layoutY="255.0" prefHeight="159.0" prefWidth="381.0">
                <columns>
                   <TableColumn fx:id="colJueId" prefWidth="52.0" text="ID" />
                   <TableColumn fx:id="colJueTitulo" prefWidth="145.0" text="Título" />
                   <TableColumn fx:id="colJuePrecio" prefWidth="58.0" text="Precio" />
                   <TableColumn fx:id="colJuePegi" prefWidth="54.0" text="PEGI" />
+                  <TableColumn fx:id="colJueCantidad" prefWidth="71.0" text="Cantidad" />
                </columns>
             </TableView>
-            <Label layoutX="786.0" layoutY="264.0" text="Cantidad" />
-            <ListView fx:id="lvCantidades" layoutX="786.0" layoutY="281.0" prefHeight="133.0" prefWidth="66.0" />
             <Label layoutX="471.0" layoutY="428.0" text="Tipo" />
             <TextField fx:id="txtTipo" editable="false" layoutX="502.0" layoutY="424.0" prefHeight="25.0" prefWidth="118.0" />
             <Label layoutX="706.0" layoutY="428.0" text="Total" />
@@ -65,6 +62,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+            <Button fx:id="btnGestionar" layoutX="680.0" layoutY="161.0" mnemonicParsing="false" onAction="#onBtnGestionar" text="Gestionar" />
             </children>
         </Pane>
     </children>

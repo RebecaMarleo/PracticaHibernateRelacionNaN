@@ -31,11 +31,31 @@ public class EtiquetasController implements Initializable {
         factory = HibernateUtil.getSessionFactory();
         session = HibernateUtil.getSession();
 
+        if (Main.ventanaTransOVentanaEtiq != null) {
+            if (Main.ventanaTransOVentanaEtiq.isEmpty()) {
+                Main.ventanaEtiquetas = false;
+            }
+        }
+
         if (Main.ventanaJuegos) {
             Main.ventanaMenu = false;
         }
 
         cargarEtiquetas();
+
+        // si viene desde una pantalla donde se ha seleccionado una etiqueta se precargan los datos de la etiqueta elegida
+        if (Main.etiqueta != null) {
+            String nombre = Main.etiqueta.getNombre();
+            Etiqueta etiqueta = etiquetaDAO.obtenerEtiqueta(session, nombre);
+            txtId.setText(String.valueOf(etiqueta.getId()));
+            txtNombre.setText(nombre);
+            cargarJuegos(nombre);
+
+            this.btnModificar.setDisable(false);
+            this.btnBorrar.setDisable(false);
+
+            lvEtiquetas.getSelectionModel().select(Main.etiqueta.getNombre());
+        }
     }
 
     SessionFactory factory;
@@ -47,16 +67,13 @@ public class EtiquetasController implements Initializable {
     private ArrayList<Etiqueta> etiquetas = new ArrayList<>();
 
     @FXML
-    private Button btnAceptar;
-
-    @FXML
     private Button btnBorrar;
 
     @FXML
-    private Button btnCancelar;
+    private Button btnCrear;
 
     @FXML
-    private Button btnCrear;
+    private Button btnGestionar;
 
     @FXML
     private Button btnModificar;
@@ -129,7 +146,7 @@ public class EtiquetasController implements Initializable {
                     AlertUtils.Alerts("ERROR", "Error", "", "Debes introducir un nuevo nombre para la etiqueta").showAndWait();
                 } else {
                     // comprueba si ya existe una etiqueta con el mismo nombre
-                    boolean etiquetaExiste = etiquetaDAO.comprobarEtiqueta(session, nombre);
+                    boolean etiquetaExiste = etiquetaDAO.comprobarEtiquetaModificar(session, nuevoNombre, etiqueta.getId());
                     // si hay una etiqueta con el nombre proporcionado se muestra un aviso y muestra los datos de esa etiqueta
                     if (etiquetaExiste) {
                         AlertUtils.Alerts("ERROR", "Error", "", "Ya existe una etiqueta con ese nombre").showAndWait();
@@ -141,6 +158,13 @@ public class EtiquetasController implements Initializable {
                         if (result.isPresent() && result.get() == ButtonType.OK) {
                             etiqueta.setNombre(nuevoNombre);
                             etiquetaDAO.modificarEtiqueta(session, etiqueta);
+
+                            if (Main.etiqueta != null) {
+                                // comprueba si la etiqueta que se va a modificar es la misma que la última que se había seleccionado y si coinciden actualiza la selección
+                                if (Main.etiqueta.equals(etiqueta)) {
+                                    Main.etiqueta = etiqueta;
+                                }
+                            }
                         }
                         cargarEtiquetas();
                         vaciarCampos();
@@ -164,6 +188,12 @@ public class EtiquetasController implements Initializable {
                 Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar etiqueta", "", "Se va a borrar la etiqueta. Esta acción no es reversible. ¿Deseas continuar?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
+                    if (Main.etiqueta != null) {
+                        // comprueba si la etiqueta que se va a borrar es la misma que la última que se había seleccionado y si coinciden vacía la selección
+                        if (Main.etiqueta.equals(etiqueta)) {
+                            Main.etiqueta = null;
+                        }
+                    }
                     etiquetaDAO.borrarEtiqueta(session, etiqueta);
                 }
                 cargarEtiquetas();
@@ -195,20 +225,21 @@ public class EtiquetasController implements Initializable {
     }
 
     @FXML
-    private void onBtnAceptar(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void onBtnCancelar(ActionEvent event) {
-
+    private void onBtnGestionar(ActionEvent event) throws IOException {
+        Main.ventanaEtiquetas = true;
+        Main.ventanaTransOVentanaEtiq = "Etiquetas";
+        try {
+            Main.juego = tblJuegos.getSelectionModel().getSelectedItem();
+        } catch (Exception e) {}
+        SceneManager.showVentana(event, "juegos", 700, 475);
     }
 
     @FXML
     private void onBtnVolver(ActionEvent event) throws IOException {
+        Main.ventanaEtiquetas = false;
         if (Main.ventanaMenu) {
             SceneManager.showVentana(event, "menu", 300, 325);
-        } else if (Main.ventanaJuegos) {
+        } else if (Main.ventanaJuegos || Main.ventanaTransOVentanaEtiq.equals("Transacciones")) {
             Main.ventanaMenu = true;
             SceneManager.showVentana(event, "juegos", 700, 475);
         }

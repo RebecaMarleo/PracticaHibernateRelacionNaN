@@ -3,6 +3,7 @@ package com.example.practicahibernaterelacionnan.Modelo;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="Etiqueta")
@@ -65,5 +66,17 @@ public class Etiqueta {
             juegos = new ArrayList<Juego>();
         }
         juegos.remove(juego);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Etiqueta etiqueta = (Etiqueta) o;
+        return getId() == etiqueta.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

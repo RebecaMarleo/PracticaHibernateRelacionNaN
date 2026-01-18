@@ -4,10 +4,7 @@ import javafx.beans.property.*;
 import javafx.beans.value.ObservableValue;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="Juego")
@@ -148,5 +145,17 @@ public class Juego {
             etiquetas = new ArrayList<Etiqueta>();
         }
         etiquetas.remove(etiqueta);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Juego juego = (Juego) o;
+        return getId() == juego.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 }

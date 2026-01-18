@@ -83,4 +83,17 @@ public class EtiquetaDAO implements EtiquetaDAOInterface {
 
         return !etiqueta.isEmpty();
     }
+
+    @Override
+    public boolean comprobarEtiquetaModificar(Session session, String nombre, int id) {
+        String query = "FROM Etiqueta WHERE nombre = :nombre";
+        List<Etiqueta> etiqueta = session.createQuery(query, Etiqueta.class)
+                .setParameter("nombre", nombre)
+                .getResultList();
+        if (!etiqueta.isEmpty()) {
+            return etiqueta.getFirst().getId() != id;
+        } else {
+            return !etiqueta.isEmpty();
+        }
+    }
 }

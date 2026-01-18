@@ -15,6 +15,7 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Main.ventanaMenu = false;
+        Main.ventanaTransOVentanaEtiq = "";
     }
 
     @FXML
@@ -34,30 +35,35 @@ public class MenuController implements Initializable {
 
     @FXML
     public void onBtnJuegos(ActionEvent event) throws IOException {
+        Main.juego = null;
         Main.ventanaMenu = true;
         SceneManager.showVentana(event, "juegos", 700, 475);
     }
 
     @FXML
     public void onBtnTransacciones(ActionEvent event) throws IOException {
+        Main.transaccion = null;
         Main.ventanaMenu = true;
         SceneManager.showVentana(event, "transacciones", 1000, 575);
     }
 
     @FXML
     public void onBtnClientes(ActionEvent event) throws IOException {
+        Main.cliente = null;
         Main.ventanaMenu = true;
         SceneManager.showVentana(event, "clientes", 900, 475);
     }
 
     @FXML
     public void onBtnEtiquetas(ActionEvent event) throws IOException {
+        Main.etiqueta = null;
         Main.ventanaMenu = true;
         SceneManager.showVentana(event, "etiquetas", 700, 475);
     }
 
     @FXML
     public void onBtnLogout(ActionEvent event) throws IOException {
+        Main.empleadoLogin = null;
         SceneManager.showVentana(event, "login", 500, 400);
     }
 }

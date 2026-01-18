@@ -4,7 +4,6 @@ import com.example.practicahibernaterelacionnan.DAO.EtiquetaDAO;
 import com.example.practicahibernaterelacionnan.DAO.JuegoDAO;
 import com.example.practicahibernaterelacionnan.DAO.PegiDAO;
 import com.example.practicahibernaterelacionnan.Main;
-import com.example.practicahibernaterelacionnan.Modelo.Cliente;
 import com.example.practicahibernaterelacionnan.Modelo.Etiqueta;
 import com.example.practicahibernaterelacionnan.Modelo.Juego;
 import com.example.practicahibernaterelacionnan.Util.AlertUtils;
@@ -37,7 +36,7 @@ public class JuegosController implements Initializable {
         session = HibernateUtil.getSession();
 
         Main.ventanaJuegos = false;
-        if (Main.ventanaTransacciones) {
+        if (Main.ventanaTransacciones || Main.ventanaEtiquetas) {
             Main.ventanaMenu = false;
         }
 
@@ -57,6 +56,8 @@ public class JuegosController implements Initializable {
 
             this.btnModificar.setDisable(false);
             this.btnBorrar.setDisable(false);
+
+            tblJuegos.getSelectionModel().select(Main.juego);
         }
     }
 
@@ -69,8 +70,10 @@ public class JuegosController implements Initializable {
 
     private ArrayList<Etiqueta> etiquetas = new ArrayList<>();
     private ArrayList<Etiqueta> etiquetasGlobales = new ArrayList<>();
-    ArrayList<String> nombres = new ArrayList<>();
-    ArrayList<String> nombresGlobales = new ArrayList<>();
+    private ArrayList<String> nombres = new ArrayList<>();
+    private ArrayList<String> nombresGlobales = new ArrayList<>();
+
+    private String tipoUltimaEtiquetaSeleccionada = "";
 
     @FXML
     private Button btnAnadir;
@@ -103,7 +106,10 @@ public class JuegosController implements Initializable {
     private TableColumn<Juego, String> colPegi;
 
     @FXML
-    private TableColumn<Juego, Double> colPrecio;
+    private TableColumn<Juego, Double> colPrecioCompra;
+
+    @FXML
+    private TableColumn<Juego, Double> colPrecioVenta;
 
     @FXML
     private TableColumn<Juego, String> colTitulo;
@@ -252,6 +258,13 @@ public class JuegosController implements Initializable {
                                     // considero que este segundo método es peor porque si se creasen ids para cada asociación quedarían muchos huecos vacíos entre medias
                                     // además existiría el riesgo de llegar al límite de ids generables demasiado rápido (sé que es muy alto pero cuántos menos ids se creen innecesariamente mejor)
                                     juegoDAO.modificarJuego(session, juego);
+
+                                    if (Main.juego != null) {
+                                        // comprueba si el juego que se va a modificar es el mismo que el último que se había seleccionado y si coinciden actualiza la selección
+                                        if (Main.juego.equals(juego)) {
+                                            Main.juego = juego;
+                                        }
+                                    }
                                 }
                             }
                             cargarJuegos();
@@ -282,6 +295,12 @@ public class JuegosController implements Initializable {
                 Alert alert = AlertUtils.Alerts("CONFIRMATION", "Borrar juego", "", "Se va a borrar el juego. Esta acción no es reversible. ¿Deseas continuar?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
+                    if (Main.juego != null) {
+                        // comprueba si el juego que se va a borrar es el mismo que el último que se había seleccionado y si coinciden vacía la selección
+                        if (Main.juego.equals(juego)) {
+                            Main.juego = null;
+                        }
+                    }
                     juegoDAO.borrarJuego(session, juego);
                 }
                 cargarJuegos();
@@ -406,8 +425,33 @@ public class JuegosController implements Initializable {
     }
 
     @FXML
+    void onFilaSeleccionadaListaEtiquetas(MouseEvent event) {
+        tipoUltimaEtiquetaSeleccionada = "Seleccionadas";
+    }
+
+    @FXML
+    void onFilaSeleccionadaListaEtiquetasGlobales(MouseEvent event) {
+        tipoUltimaEtiquetaSeleccionada = "Globales";
+    }
+
+    @FXML
     void onBtnGestionar(ActionEvent event) throws IOException {
         Main.ventanaJuegos = true;
+        try {
+            String nombreEtiqueta;
+            switch (tipoUltimaEtiquetaSeleccionada) {
+                case "Seleccionadas":
+                    nombreEtiqueta = lvEtiquetasDelJuego.getSelectionModel().getSelectedItem();
+                    break;
+                case "Globales":
+                    nombreEtiqueta = lvEtiquetasGlobales.getSelectionModel().getSelectedItem();
+                    break;
+                default:
+                    nombreEtiqueta = "";
+                    break;
+            }
+            Main.etiqueta = etiquetaDAO.obtenerEtiqueta(session, nombreEtiqueta);
+        } catch (Exception e) {}
         SceneManager.showVentana(event, "etiquetas", 700, 475);
     }
 
@@ -415,9 +459,17 @@ public class JuegosController implements Initializable {
     void onBtnVolver(ActionEvent event) throws IOException {
         if (Main.ventanaMenu) {
             SceneManager.showVentana(event, "menu", 300, 325);
-        } else if (Main.ventanaTransacciones) {
-            Main.ventanaMenu = true;
-            SceneManager.showVentana(event, "transacciones", 1000, 575);
+        } else if (Main.ventanaTransacciones || Main.ventanaEtiquetas) {
+            switch (Main.ventanaTransOVentanaEtiq) {
+                case "Transacciones":
+                    Main.ventanaTransOVentanaEtiq = "Etiquetas";
+                    SceneManager.showVentana(event, "transacciones", 1000, 575);
+                    break;
+                case "Etiquetas":
+                    Main.ventanaTransOVentanaEtiq = "Transacciones";
+                    SceneManager.showVentana(event, "etiquetas", 700, 475);
+                    break;
+            }
         }
     }
 
@@ -430,7 +482,8 @@ public class JuegosController implements Initializable {
 
             colId.setCellValueFactory(cellData -> cellData.getValue().idProperty());
             colTitulo.setCellValueFactory(cellData -> cellData.getValue().tituloProperty());
-            colPrecio.setCellValueFactory(cellData -> cellData.getValue().precioVentaProperty());
+            colPrecioVenta.setCellValueFactory(cellData -> cellData.getValue().precioVentaProperty());
+            colPrecioCompra.setCellValueFactory(cellData -> cellData.getValue().precioCompraProperty());
             colPegi.setCellValueFactory(cellData -> cellData.getValue().pegiProperty());
 
             tblJuegos.setItems(datosJuegos);

@@ -19,17 +19,17 @@
             <TextField fx:id="txtId" editable="false" layoutX="96.0" layoutY="41.0" prefHeight="25.0" prefWidth="332.0" />
             <Label layoutX="47.0" layoutY="73.0" text="Título" />
             <TextField fx:id="txtTitulo" layoutX="96.0" layoutY="69.0" prefHeight="25.0" prefWidth="332.0" />
-            <Label layoutX="47.0" layoutY="103.0" text="Precio de compra" />
-            <TextField fx:id="txtPrecioCompra" layoutX="151.0" layoutY="99.0" prefHeight="25.0" prefWidth="77.0" />
-            <Label layoutX="262.0" layoutY="103.0" text="Precio de venta" />
-            <TextField fx:id="txtPrecioVenta" layoutX="350.0" layoutY="99.0" prefHeight="25.0" prefWidth="77.0" />
+            <Label layoutX="47.0" layoutY="103.0" text="Precio de venta" />
+            <TextField fx:id="txtPrecioVenta" layoutX="136.0" layoutY="99.0" prefHeight="25.0" prefWidth="77.0" />
+            <Label layoutX="246.0" layoutY="103.0" text="Precio de Compra" />
+            <TextField fx:id="txtPrecioCompra" layoutX="350.0" layoutY="99.0" prefHeight="25.0" prefWidth="77.0" />
             <Label layoutX="47.0" layoutY="134.0" text="Clasificación por edades" />
             <ComboBox fx:id="cboxPegi" layoutX="189.0" layoutY="130.0" prefHeight="25.0" prefWidth="239.0" />
             <Label layoutX="461.0" layoutY="45.0" text="Etiquetas" />
-            <ListView fx:id="lvEtiquetasDelJuego" layoutX="461.0" layoutY="62.0" prefHeight="124.0" prefWidth="200.0" />
+            <ListView fx:id="lvEtiquetasDelJuego" layoutX="461.0" layoutY="62.0" onMouseClicked="#onFilaSeleccionadaListaEtiquetas" prefHeight="124.0" prefWidth="200.0" />
             <Button fx:id="btnQuitar" layoutX="494.0" layoutY="200.0" mnemonicParsing="false" onAction="#onBtnQuitar" text="Quitar" />
             <Button fx:id="btnAnadir" layoutX="576.0" layoutY="200.0" mnemonicParsing="false" onAction="#onBtnAnadir" text="Añadir" />
-            <ListView fx:id="lvEtiquetasGlobales" layoutX="461.0" layoutY="250.0" prefHeight="163.0" prefWidth="200.0" />
+            <ListView fx:id="lvEtiquetasGlobales" layoutX="461.0" layoutY="250.0" onMouseClicked="#onFilaSeleccionadaListaEtiquetasGlobales" prefHeight="163.0" prefWidth="200.0" />
             <Button fx:id="btnGestionar" layoutX="593.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnGestionar" text="Gestionar" />
             <Label layoutX="150.0" layoutY="186.0" text="CATÁLOGO DE JUEGOS">
                <font>
@@ -38,18 +38,17 @@
             </Label>
             <TableView fx:id="tblJuegos" layoutX="47.0" layoutY="212.0" onMouseClicked="#onFilaSeleccionadaTablaJuegos" prefHeight="202.0" prefWidth="381.0">
               <columns>
-                <TableColumn fx:id="colId" prefWidth="52.0" text="ID" />
-                <TableColumn fx:id="colTitulo" prefWidth="208.0" text="Título" />
-                  <TableColumn fx:id="colPrecio" prefWidth="53.0" text="Precio" />
-                  <TableColumn fx:id="colPegi" prefWidth="67.0" text="PEGI" />
+                <TableColumn fx:id="colId" prefWidth="37.0" text="ID" />
+                <TableColumn fx:id="colTitulo" prefWidth="157.0" text="Título" />
+                  <TableColumn fx:id="colPrecioVenta" prefWidth="63.0" text="P. Venta" />
+                  <TableColumn fx:id="colPrecioCompra" prefWidth="66.0" text="P. Compra" />
+                  <TableColumn fx:id="colPegi" prefWidth="57.0" text="PEGI" />
               </columns>
             </TableView>
-            <Button fx:id="btnCrear" layoutX="57.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
-            <Button fx:id="btnModificar" disable="true" layoutX="111.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
-            <Button fx:id="btnBorrar" disable="true" layoutX="189.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
+            <Button fx:id="btnCrear" layoutX="129.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnCrear" text="Crear" />
+            <Button fx:id="btnModificar" disable="true" layoutX="204.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnModificar" text="Modificar" />
+            <Button fx:id="btnBorrar" disable="true" layoutX="300.0" layoutY="424.0" mnemonicParsing="false" onAction="#onBtnBorrar" text="Borrar" />
             <Label layoutX="461.0" layoutY="233.0" text="Etiquetas globales" />
-            <Button layoutX="280.0" layoutY="424.0" mnemonicParsing="false" text="Aceptar" />
-            <Button layoutX="343.0" layoutY="424.0" mnemonicParsing="false" text="Cancelar" />
             <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#onBtnVolver" text="&lt;  VOLVER A LA PÁGINA ANTERIOR">
                <font>
                   <Font name="System Bold" size="14.0" />

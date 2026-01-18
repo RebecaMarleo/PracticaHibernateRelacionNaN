@@ -22,4 +22,6 @@ public interface EtiquetaDAOInterface {
     Etiqueta obtenerEtiqueta(Session session, String nombre);
 
     boolean comprobarEtiqueta(Session session, String nombre);
+
+    boolean comprobarEtiquetaModificar(Session session, String nombre, int id);
 }

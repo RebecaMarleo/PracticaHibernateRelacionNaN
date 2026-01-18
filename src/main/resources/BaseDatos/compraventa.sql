@@ -29,8 +29,8 @@ CREATE TABLE Transaccion(
     idEmpleado INT UNSIGNED,
     total DECIMAL(10, 2),
     tipo VARCHAR(6),
-    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente) ON UPDATE CASCADE,
-    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado) ON UPDATE CASCADE
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente) ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (idEmpleado) REFERENCES Empleado(idEmpleado) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE Juego_Transaccion(
@@ -39,7 +39,7 @@ CREATE TABLE Juego_Transaccion(
     idJuego INT UNSIGNED,
     cantidad INT,
     FOREIGN KEY (idTransaccion) REFERENCES Transaccion(idTransaccion) ON DELETE CASCADE,
-    FOREIGN KEY (idJuego) REFERENCES Juego(idJuego) ON UPDATE CASCADE
+    FOREIGN KEY (idJuego) REFERENCES Juego(idJuego) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 CREATE TABLE Etiqueta(
